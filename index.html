@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30 жаш — Бакберген жана Бермет</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  background: #f5e9df;
+  color: #54202d;
+  text-align: center;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 25px 15px;
+}
+
+#cover {
+  min-height: 100vh;
+  background: linear-gradient(145deg,#4b101f,#811f36);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #f8e8d5;
+}
+
+.envelope {
+  width: 260px;
+  height: 175px;
+  background: #f0d8bd;
+  position: relative;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 12px 35px #25000b80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #681b30;
+  font-size: 23px;
+}
+
+.envelope:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 130px solid transparent;
+  border-right: 130px solid transparent;
+  border-top: 95px solid #d6b38f;
+  transform-origin: top;
+  transition: 0.8s;
+}
+
+.envelope.open:before {
+  transform: rotateX(180deg);
+}
+
+.envelope span {
+  position: relative;
+  z-index: 2;
+}
+
+.hidden {
+  display: none !important;
+}
+
+h1 {
+  font-size: 34px;
+  color: #761d35;
+}
+
+h2 {
+  font-size: 27px;
+}
+
+.invitation {
+  max-width: 600px;
+  margin: auto;
+  padding: 30px 20px;
+  border: 2px solid #bd956d;
+  background: #fff9f0;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px #8a4c4c20;
+}
+
+.invitation p {
+  font-size: 19px;
+  line-height: 1.7;
+}
+
+.photo {
+  width: 100%;
+  max-width: 430px;
+  border-radius: 12px;
+  margin: 15px auto;
+  box-shadow: 0 5px 20px #0002;
+}
+
+button {
+  background: #741c34;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 27px;
+  font-size: 17px;
+  margin: 12px;
+  cursor: pointer;
+}
+
+.gold {
+  color: #a77b43;
+  letter-spacing: 2px;
+}
+
+#gallery img {
+  display: none;
+}
+
+#gallery img.active {
+  display: block;
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<section id="cover" class="page">
+  <p class="gold">SPECIAL INVITATION</p>
+  <h2>Сиздерге чакыруу!</h2>
+
+  <div class="envelope" id="envelope" onclick="openInvitation()">
+    <span>Ачуу үчүн басыңыз ♡</span>
+  </div>
+
+  <p>Сиздер үчүн өзгөчө чакыруу</p>
+</section>
+
+<section id="main" class="page hidden">
+
+  <div class="invitation">
+
+    <p class="gold">ТУУЛГАН КҮНГӨ ЧАКЫРУУ</p>
+
+    <h1>30 жаш</h1>
+
+    <h2>Бакберген & Бермет</h2>
+
+    <p>
+      Урматтуу достор, аяштар жана аяшкалар!
+    </p>
+
+    <p>
+      Сиздерди биздин 30 жаштык туулган күндүк
+      кечебиздин сыйлуу коногу болууга чакырабыз!
+    </p>
+
+    <h2 class="gold">22-НОЯБРЬ</h2>
+
+    <h2>Саат 16:00</h2>
+
+    <p>
+      📍 Токмок шаары<br>
+      «Караван Сарай» кафеси
+    </p>
+
+    <div id="gallery">
+      <img src="photo1.jpg" class="photo active" alt="Сүрөт 1">
+      <img src="photo2.jpg" class="photo" alt="Сүрөт 2">
+      <img src="photo3.jpg" class="photo" alt="Сүрөт 3">
+    </div>
+
+    <button onclick="nextPhoto()">Кийинки сүрөт ♡</button>
+
+    <p class="gold">
+      Сиздерди чыдамсыздык менен күтөбүз!
+    </p>
+
+    <div class="footer">
+      Урматтоо менен,<br>
+      <b>Бакберген жана Бермет</b> ❤️
+    </div>
+
+  </div>
+
+  <audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <button onclick="toggleMusic()" id="musicBtn">
+    ♫ Музыканы күйгүзүү
+  </button>
+
+</section>
+
+<script>
+function openInvitation() {
+  document.getElementById("envelope").classList.add("open");
+
+  setTimeout(() => {
+    document.getElementById("cover").classList.add("hidden");
+    document.getElementById("main").classList.remove("hidden");
+
+    const music = document.getElementById("music");
+    music.play().catch(() => {});
+  }, 900);
+}
+
+let currentPhoto = 0;
+
+function nextPhoto() {
+  const photos = document.querySelectorAll("#gallery img");
+
+  photos[currentPhoto].classList.remove("active");
+
+  currentPhoto = (currentPhoto + 1) % photos.length;
+
+  photos[currentPhoto].classList.add("active");
+}
+
+function toggleMusic() {
+  const music = document.getElementById("music");
+  const btn = document.getElementById("musicBtn");
+
+  if (music.paused) {
+    music.play();
+    btn.innerText = "♫ Музыканы токтотуу";
+  } else {
+    music.pause();
+    btn.innerText = "♫ Музыканы күйгүзүү";
+  }
+}
+</script>
+
+</body>
+</html>
